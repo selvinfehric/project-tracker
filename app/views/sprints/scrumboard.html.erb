@@ -1,0 +1,66 @@
+<%= render 'shared/menu' %>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @sprint.name %>
+</p>
+
+
+<% @todo = Story.find_all_by_sprint_id_and_status_id(@sprint.id, 1) %>
+<% @doing = Story.find_all_by_sprint_id_and_status_id(@sprint.id, 2) %>
+<% @reviewing = Story.find_all_by_sprint_id_and_status_id(@sprint.id, 3) %>
+<% @done = Story.find_all_by_sprint_id_and_status_id(@sprint.id, 4) %>
+
+
+<div id="scrumboard-wrapper" style="min-height: 650px; ">
+	<div class="scrum_board_column" id="board_todo_column">
+		<div class="scrum_board_header scrum_board_header_todo">Todo</div>
+		<ul class="scrum_board_list ui-sortable" id="todo" style="min-height: 650px; ">
+		<% for t in @todo %>
+			<li id="<%= t.id %>">
+				<div class="summary"><%= t.summary %></div>	
+				<div class="points"><%= t.points %></div>
+				<div class="asignee"><%= User.find_by_id(t.user_id).username %></div>				
+			</li>
+		<% end %>
+	 	</ul>
+	</div>
+	<div class="scrum_board_column" id="board_doing_column">
+		<div class="scrum_board_header scrum_board_header_doing">Doing</div>
+		<ul class="scrum_board_list ui-sortable" id="doing" style="min-height: 650px; ">
+		<% for t in @doing %>
+			<li id="<%= t.id %>">
+				<div class="summary"><%= t.summary %></div>	
+				<div class="points"><%= t.points %></div>
+				<div class="asignee"><%= User.find_by_id(t.user_id).username %></div>				
+			</li>		
+		<% end %>			
+	 	</ul>
+	</div>	
+	<div class="scrum_board_column" id="board_reviewing_column">
+		<div class="scrum_board_header scrum_board_header_reviewing">Reviewing</div>
+		<ul class="scrum_board_list ui-sortable" id="reviewing" style="min-height: 650px; ">
+		<% for t in @reviewing %>
+			<li id="<%= t.id %>">
+				<div class="summary"><%= t.summary %></div>	
+				<div class="points"><%= t.points %></div>
+				<div class="asignee"><%= User.find_by_id(t.user_id).username %></div>				
+			</li>
+		<% end %>			
+	 	</ul>
+	</div>	
+	<div class="scrum_board_column" id="board_done_column">
+		<div class="scrum_board_header scrum_board_header_done">Done</div>
+		<ul class="scrum_board_list ui-sortable" id="done" style="min-height: 650px; ">
+		<% for t in @done %>
+			<li id="<%= t.id %>">
+				<div class="summary"><%= t.summary %></div>	
+				<div class="points"><%= t.points %></div>
+				<div class="asignee"><%= User.find_by_id(t.user_id).username %></div>
+			</li>
+		<% end %>			
+	 	</ul>
+	</div>					
+</div>
+	

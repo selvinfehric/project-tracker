@@ -1,0 +1,28 @@
+// Place all the styles related to the Stories controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#stories_list td{
+  width:100px;
+  text-align:center;
+}
+
+#stories_list td.td_button{
+  width:50px;
+  text-align:center;
+}
+#backlog{
+  padding: 10px 0px;
+}
+
+#backlog ul { list-style: none; padding: 0px; margin: 10px 10px; display: block; }
+#backlog ul li { padding: 2px 8px; }
+#backlog ul.stories { margin: 10px 17px; border-left: solid 5px gray; border-top: solid 0px gray; background: whitesmoke;}
+#backlog ul.stories li { border-bottom: solid 1px gray; border-right: solid 1px gray; overflow: hidden; }
+#backlog ul .title {  font-weight: bold; font-size: 14px;  }
+
+.sprints-menu { list-style: none; margin: 0px; padding: 0px; border: none; position: absolute; }
+.sprints-menu li { border: none; cursor: pointer; width: 100px; }
+
+#story-modal { width: 600px; }
+#story-modal textarea { width: 550px; height: 100px; }

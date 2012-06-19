@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RiaTracker</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="pt-logo"></div>	
+<div style="background-color: whiteSmoke; border: none;" class="well modal-example">
+    <div style="position: relative; top: auto; left: auto; margin: 0 auto; z-index: 1" class="modal">
+      <div class="modal-header">
+        <h1>Login</h1>
+      </div>
+      <div class="modal-body">
+		<form id="login" method="post">
+		<%= flash[:wrong_login] %>
+		<br/>
+		<label for="username">Username</label>
+		<input type="text" name="username"/>
+		<br/>
+		<label for="password">Password</label>
+		<input type="password" name="password"/>
+		<br/>
+		<input clase="btn btn-primary" type="submit" name="login" value="Login"/>
+		</form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+</div>
+
+</body>
+</html>

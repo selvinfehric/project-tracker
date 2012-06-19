@@ -1,0 +1,88 @@
+<%= render 'shared/menu' %>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @sprint.name %>
+</p>
+
+<p>
+  <b>Start:</b>
+  <%= @sprint.start %>
+</p>
+
+<p>
+  <b>End:</b>
+  <%= @sprint.end %>
+</p>
+<%= render 'chart' %>
+
+<input id="project-id" type="hidden" name="project-id" value="<%= @project_id %>">
+<input id="sprint-id" type="hidden" name="sprint-id" value="<%= @sprint.id %>">
+
+<!-- story modal -->
+<div id="story-modal" class="modal hide">
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Create story</h3>
+  </div>
+  <div class="modal-body">
+  	<form id="story-form">
+  		<label>Summary</label>
+		<textarea name="story[summary]" value=""></textarea></br>
+		<label>Details</label>
+		<textarea name="story[details]" value=""></textarea></br>
+		<label>Points</label>
+		<input type="text" name="story[points]" value=""></br>
+		<label>Status</label>	
+  		<select name="story[status_id]">
+  			<% for s in Status.all %>
+  			<option value="<%= s.id %>"><%= s.name %></option>
+  			<% end %>
+  		</select>
+		<label>Type</label>	
+  		<select name="story[type_id]">  			
+  			<% for st in StoryType.all %>
+  			<option value="<%= st.id %>"><%= st.name %></option>
+  			<% end %>
+  		</select>  			
+		</br><label>Assign to</label>		
+  		<select name="story[user_id]">  			
+  			<% for u in User.all %>
+  			<option value="<%= u.id %>"><%= u.username %></option>
+  			<% end %>
+  		</select>    
+  		</br><label>Epic</label>	
+  		<select name="story[epic_id]">
+  			<option value="-1">Please select</option>
+  			<% for e in Epic.find_all_by_project_id( @project_id ) %>
+  			<option value="<%= e.id %>"><%= e.name %></option>
+  			<% end %>
+  		</select>    			
+  	</form>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn close-modal">Close</a>
+    <a href="#" class="btn btn-primary" id="save-story-details">Save changes</a>
+  </div>	
+</div>
+<!-- /story modal -->
+
+<div class="clearfix"></div>
+
+<br/>
+<a class="add-new-story btn btn-success" href="#">Add new</a>
+<br/>
+<div id="backlog">
+	<ul class="stories" id="stories-wrapper">
+	<% @sprint.stories.each do |story| %>
+	  <li id="story_<%= story.id %>">
+	  	<%= story.summary %>
+	  	<span class="add-story-menu" data-story-id="<%= story.id %>">
+	  		<i class="icon-remove"></i><i class="icon-pencil"></i><i class="icon-share"></i>
+	  	</span>
+	  </li>
+	<% end %>
+	</ul>
+</div>
+

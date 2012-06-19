@@ -1,0 +1,137 @@
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+	<%
+		niz = []
+		ukupno = []
+		zavrseno = []
+		niz = (@project.date_created.strftime('%Y-%m-%d')..DateTime.now.strftime('%Y-%m-%d')).to_a
+		i=0;
+		for x in niz
+			niz[i]=x;
+			#%d/%m/%Y	%Y-%m-%d
+			#total = Story.find(:all, :conditions => [ "project_id=? AND date_created<=?", @project.id,x]);
+			ukupno[i]=Story.find(:all, :conditions => [ "project_id=? AND points IS NOT NULL AND date_created<=?", @project.id,(x+" 23:59:59").to_datetime]).map(&:points).inject(0, :+)
+			#completed=Story.find(:all, :conditions => [ "project_id=? AND date_completed<=?", @project.id,x]);
+			zavrseno[i]=Story.find(:all, :conditions => [ "project_id=? AND points IS NOT NULL AND date_completed<=?", @project.id,(x+" 23:59:59").to_datetime]).map(&:points).inject(0, :+)
+			# ili ovo:
+			# completed.inject{|sum,x| sum + x.points }
+			i=i+1;
+		end
+	%>
+<script>
+$(function () {
+    var chart;
+    $(document).ready(function() {   	
+    	/*
+    	var date = <%= @project.date_created.to_json.to_s.html_safe %>
+    	var dateT = <%= DateTime.now.to_json.to_s.html_safe %>
+    	var oDate = new Date(date)	
+    	var oDateT = new Date(dateT)
+    	*/
+    	var niz = <%= niz.to_json.html_safe %>	
+    	var ukupno = <%= ukupno.to_json.html_safe %>
+    	var zavrseno = <%= zavrseno.to_json.html_safe %>		
+		
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'chart',
+                type: 'area'
+            },
+            title: {
+                text: '<%= @project.name %>'
+            },
+            subtitle: {
+                text: 'Project Progress'
+            },
+            xAxis: {
+              	categories: niz,
+                tickmarkPlacement: 'on',
+                title: {
+                    enabled: false
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Number of points'
+                },
+                labels: {
+                    formatter: function() {
+                       return this.value;
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                   return ''+
+                        this.x +': '+ Highcharts.numberFormat(this.y, 0, ',');
+                }
+            },
+
+            series: [{
+                name: 'Total',
+                data: ukupno
+
+            }, {
+                name: 'Completed',
+                data: zavrseno
+            }]
+        });
+    });
+});
+</script>
+
+
+<%= render 'shared/menu' %>
+	
+<p id="notice"><%= notice %></p>
+<h1><%= @project.name %></h1>
+<p>
+  <b>Date created:</b>
+  <%= @project.date_created %>
+</p>
+
+<!--
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
+-->
+
+<div id="info">		
+			<div class="stats">
+				Total Stories
+				<h4><%= Story.find(:all, :conditions => [ "project_id=?", @project.id]).count	%></h4>
+				<%= #Story.find(:all, :conditions => [ "date_completed<?", Date.today]).count 
+				%> 
+			</div>
+			<div class="stats">
+				Stories Left
+				<h4><%= Story.find(:all, :conditions => [ "status_id = 1 AND project_id=?", @project.id]).count	%></h4> 
+			</div>
+			<div class="stats">
+				Stories In Progress
+				<h4><%= Story.find(:all, :conditions => [ "status_id = 2 AND project_id=?", @project.id]).count	%></h4> 
+			</div>
+			<div class="stats">
+				Stories Reviewing
+				<h4><%= Story.find(:all, :conditions => [ "status_id = 3 AND project_id=?", @project.id]).count	%></h4> 
+			</div>
+			<div class="stats">
+				Stories Completed
+				<h4><%= Story.find(:all, :conditions => [ "status_id = 4 AND project_id=?", @project.id]).count	%></h4>
+			</div>
+</div>
+
+<div id="chart">
+</div>
+
+<div id="stream">
+	<h2>Stream</h2>
+	<br/>
+	<ul>
+		<% for s in @streams %>
+		<li class="stream_item">
+			<img src="/assets/<%= s['type'] %>.png"/>
+			Story <%= link_to s['item'].summary, edit_story_path(s['item']) %> has been <%= s['type'] %> on <%= s['date'] %>.
+		</li>
+		<% end %>
+	</ul>
+</div>

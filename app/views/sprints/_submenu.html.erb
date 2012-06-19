@@ -1,0 +1,9 @@
+<div class="subnav subnav-fixed" style="margin-top:37px;">
+  <ul class="nav nav-pills">
+    <li class=<%= (@current_subsubmenu=="show")?"active" :""%>><a href="/sprints/<%= @sprint.id %>" style="color:black;">Sprint Details</a></li>
+    <li class=<%= (@current_subsubmenu=="update")?"active" :""%>><a href="/sprints/<%= @sprint.id %>/edit" style="color:black;">Edit Sprint</a></li>
+    <li class=<%= (@current_subsubmenu=="scrumboard")?"active" :""%>><a href="/sprints/scrumboard/<%= @sprint.id %>" style="color:black;">Scrumboard</a></li>
+  </ul>
+</div>
+
+<%= @sprint.id %>

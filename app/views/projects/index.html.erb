@@ -1,0 +1,15 @@
+<h1>Choose project</h1>
+
+<br />
+
+<% @projects.each do |project| %>
+	<% if project.users.exists?(session[:user]) || session[:user].is_admin %>
+    	<%= link_to project.name, project, :class=>"btn btn-primary btn-large"  %>
+	<% end %>
+<% end %>
+
+<br /><br />
+
+<% if(session[:user].is_admin)%>
+	<%= link_to 'Add new', new_project_path, :class=>"btn btn-secondary btn-large" %>
+<% end %>

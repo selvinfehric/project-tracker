@@ -1,0 +1,120 @@
+<%= render 'shared/menu' %>
+
+<input id="project-id" type="hidden" name="project-id" value="<%= @project_id %>">
+<!-- epics modal -->
+<div id="epics-modal" class="modal" data-is-new="true" data-parent-id="-1" data-epic-id="-1">
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Create epic</h3>
+  </div>
+  <div class="modal-body">
+  	<form id="epic-form">
+  		<label for="name">Title</label>
+  		<input type="text" name="name" value=""/> <br/>
+  		<label for="description">Description</label>
+  		<textarea name="description" value=""></textarea> <br/>
+  		<label for="epic">Epic</label>
+  		<select name="epic">
+  			<option value="-1">Please select</option>
+  			<% for e in Epic.find_all_by_project_id( @project_id ) %>
+  			<option value="<%= e.id %>"><%= e.name %></option>
+  			<% end %>
+  		</select>
+  	</form>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn close-modal">Close</a>
+    <a href="#" class="btn btn-primary" id="save-epic-details">Save changes</a>
+    <a href="#" class="btn btn-danger" id="delete-epic">Delete epic</a>
+  </div>
+</div>
+<!-- /epics modal -->
+
+<!-- story modal -->
+<div id="story-modal" class="modal hide">
+  <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Create story</h3>
+  </div>
+  <div class="modal-body">
+  	<form id="story-form">
+  		<label>Summary</label>
+		<textarea name="story[summary]" value=""></textarea></br>
+		<label>Details</label>
+		<textarea name="story[details]" value=""></textarea></br>
+		<label>Points</label>
+		<input type="text" name="story[points]" value=""></br>
+		<label>Status</label>	
+  		<select name="story[status_id]">
+  			<option value="-1">Please select</option>
+  			<% for s in Status.all %>
+  			<option value="<%= s.id %>"><%= s.name %></option>
+  			<% end %>
+  		</select>
+		<label>Type</label>	
+  		<select name="story[type_id]">
+  			<option value="-1">Please select</option>
+  			<% for st in StoryType.all %>
+  			<option value="<%= st.id %>"><%= st.name %></option>
+  			<% end %>
+  		</select>  		
+		</br><label>Sprint</label>	
+  		<select name="story[sprint_id]">
+  			<option value="-1">Please select</option>
+  			<% for sp in Sprint.all %>
+  			<option value="<%= sp.id %>"><%= sp.name %></option>
+  			<% end %>
+  		</select>  		
+		</br><label>Assign to</label>		
+  		<select name="story[user_id]">
+  			<option value="-1">Please select</option>
+  			<% for u in User.all %>
+  			<option value="<%= u.id %>"><%= u.username %></option>
+  			<% end %>
+  		</select>    
+  		</br><label>Epic</label>	
+  		<select name="story[epic_id]">
+  			<option value="-1">Please select</option>
+  			<% for e in Epic.find_all_by_project_id( @project_id ) %>
+  			<option value="<%= e.id %>"><%= e.name %></option>
+  			<% end %>
+  		</select>    			
+  	</form>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn close-modal">Close</a>
+    <a href="#" class="btn btn-primary" id="save-story-details">Save changes</a>
+  </div>	
+</div>
+<!-- /story modal -->
+
+<div class="clearfix"></div>
+
+<h1>Epics</h1>
+<br/>
+<a id="add-new-epic" class="btn btn-success" href="#">Add new</a>
+<br/>
+
+<div id="epic-container">
+<% epics = Epic.find_all_by_epic_id_and_project_id(nil, @project_id) %>	
+<%if epics.count > 0 %>
+	<% for root in epics %>		
+		<div class="epic-box min" id="epic_<%= root.id %>" data-loaded="false">
+			<span class="title"><i class="icon-plus"></i><i class="editEpic">E#<%= root.id %></i><span class="e-title"><%= root.name %></span></span>
+			<span class="e-desc"><%= root.description %></span>		
+			<div class="clear-both"></div>
+			<span class="epic-menu" data-epic-id="<%= root.id %>">
+				<a href="JavaScript:void(0);" class="add-new-child-epic">New Epic</a>
+				| <a href="JavaScript:void(0);" class="add-new-story">New Story</a>
+			</span>
+			<ul class="stories" id="cs_<%= root.id %>">
+			</ul>
+			<ul class="child-epics" id="ce_<%= root.id %>">
+			</ul>	
+		</div>		
+	<% end %>
+<% else %>
+<div class="no-epics-text">No epics defined for this project yet.</div>
+<% end %>	
+</div>
+

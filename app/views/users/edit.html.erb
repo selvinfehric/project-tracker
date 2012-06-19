@@ -1,0 +1,13 @@
+	<header id="overview" class="jumbotron subhead">
+	    <div class="subnav subnav-fixed">
+	      <ul class="nav nav-pills">
+	      	<li class=""><%= link_to 'Show Details', @user %></li>
+	        <li class="active"><%= link_to 'Edit Details', edit_user_path(@user) %></li>
+	        <li class=""><a href="/users/<%=@user.id%>/changePassword">Change Password</a></li>
+	      </ul>
+	    </div>
+	</header>
+	
+<h1>Editing user</h1>
+
+<%= render 'form' %>

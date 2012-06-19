@@ -1,0 +1,34 @@
+// Place all the styles related to the Sprints controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+#sprint_list td{
+  width:100px;
+ /* text-align:center;*/
+}
+
+#sprint_list td.td_button{
+  width:50px;
+ /* text-align:center;*/
+}
+
+.scrum_board_column { width: 25%; float: left; }
+.scrum_board_header { padding: 10px 20px; color: white; text-align: center;  font-size: 16px; } 
+.scrum_board_header_todo { background: #336796; }
+.scrum_board_header_doing { background: #ff9204; }
+.scrum_board_header_reviewing { background: #ffc804; }
+.scrum_board_header_done { background: #80b327; } 
+
+.scrum_board_list { list-style: none; margin: 0px; padding: 0px; }
+.scrum_board_list li  { display: block; padding: 5px; margin: 1px; position: relative; }
+.scrum_board_list li .summary { font-weight: bold; width: 95%; margin-bottom: 10px; }
+.scrum_board_list li .points { position: absolute; right: 2px; top: 2px; padding: 5px 7px; color: black; font-weight: bold; font-size: 20px; }
+
+#todo li { background: #99b3ca; }
+#doing li { background: #ffc881; }
+#reviewing li { background: #ffe381; }
+#done li { background: #bfd993; }
+
+#story-modal { width: 600px; }
+#story-modal textarea { width: 550px; height: 100px; }

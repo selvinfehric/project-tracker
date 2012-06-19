@@ -1,0 +1,39 @@
+<%= render 'shared/menu' %>
+
+<h1>Sprints</h1>
+<br />
+<%= link_to 'Add new', new_sprint_path, :class=>"btn btn-success" %>
+<br /><br />
+
+<%if @sprints.count > 0 %>
+	<table id="sprint_list" class="table table-striped">
+	  <tr>
+	    <th>Name</th>
+	    <th>Start</th>
+	    <th>End</th>
+	    <th></th>
+	    <th></th>
+	    <th></th>
+	    <th></th>
+	  </tr>
+	
+	<% @sprints.each do |sprint| %>
+	  <tr>
+	    <td><%= sprint.name %></td>
+	    <td><%= sprint.start %></td>
+	    <td><%= sprint.end %></td>
+	    <td class="td_button"><a href="sprints/scrumboard/<%= sprint.id %>" class="btn btn-secondary btn-mini">Scrumboard</a></td>
+	    <td class="td_button"><%= link_to 'Show', sprint, :class=>"btn btn-secondary btn-mini" %></td>
+	    <td class="td_button"><%= link_to 'Edit', edit_sprint_path(sprint), :class=>"btn btn-secondary btn-mini" %></td>
+	    <td class="td_button"><%= link_to 'Destroy', sprint, confirm: 'Are you sure?', method: :delete, :class=>"btn btn-secondary btn-mini" %></td>    
+	  </tr>
+	<% end %>
+	</table>
+<% else %>
+<div class="no-sprints-text">No sprints defined for this project yet.</div>
+<% end %>
+
+
+
+
+

@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  summary: MyText
+  details: MyText
+  points: 1
+  date_created: 2012-04-21
+  date_modified: 2012-04-21
+  date_completed: 2012-04-21
+  status: 
+  type: 
+  sprint: 
+  user: 
+  project: 
+  epic: 
+
+two:
+  summary: MyText
+  details: MyText
+  points: 1
+  date_created: 2012-04-21
+  date_modified: 2012-04-21
+  date_completed: 2012-04-21
+  status: 
+  type: 
+  sprint: 
+  user: 
+  project: 
+  epic: 

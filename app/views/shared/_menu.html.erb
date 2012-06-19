@@ -1,0 +1,18 @@
+	<header id="overview" class="jumbotron subhead" style="<%= (@sprints_submenu)? "height:30px": "" %>">
+	    <div class="subnav subnav-fixed">
+	      <ul class="nav nav-pills">
+	        <li class=<%= (@current_submenu=="summary")?"active" :""%>><%= link_to 'Summary', session[:project] %></li>
+	        <li class=<%= (@current_submenu=="epics")?"active" :""%>><a href="/epics">Epics</a></li>
+	        <li class=<%= (@current_submenu=="backlog")?"active" :""%>><a href="/stories">Backlog</a></li>
+	        <li class=<%= (@current_submenu=="sprints")?"active" :""%>><a href="/sprints">Sprints</a></li>
+	        <% if(session[:user].is_admin)%>
+				<li class=<%= (@current_submenu=="edit")?"active" :""%>><%= link_to 'Edit', edit_project_path(session[:project]) %> </li>
+				<li class=""><%= link_to 'Delete', session[:project], confirm: 'Are you sure to delete whole project?', method: :delete%></li>
+			<% end %> 
+	      </ul>
+	    </div>
+	    <% if (@sprints_submenu)%>
+	    <%= render 'submenu' %>
+	    <% end %>
+	</header>
+	

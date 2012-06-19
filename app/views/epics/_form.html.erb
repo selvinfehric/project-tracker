@@ -1,0 +1,33 @@
+<%= form_for(@epic) do |f| %>
+  <% if @epic.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@epic.errors.count, "error") %> prohibited this epic from being saved:</h2>
+
+      <ul>
+      <% @epic.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :epic %><br />
+    <%= f.text_field :epic %>
+  </div>
+  <div class="field">
+    <%= f.label :project %><br />
+    <%= f.text_field :project %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

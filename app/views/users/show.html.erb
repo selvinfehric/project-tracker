@@ -1,0 +1,50 @@
+	<header id="overview" class="jumbotron subhead">
+	    <div class="subnav subnav-fixed">
+	      <ul class="nav nav-pills">
+	      	<li class="active"><%= link_to 'Show Details', @user %></li>
+	        <li class=""><%= link_to 'Edit Details', edit_user_path(@user) %></li>
+	        <li class=""><a href="/users/<%=@user.id%>/changePassword">Change Password</a></li>
+	      </ul>
+	    </div>
+	</header>
+
+<p id="notice"><%= notice %></p>
+
+<h1>
+  <%= @user.username %>
+</h1>
+<br/>
+<p>
+  <b>First name:</b>
+  <%= @user.first_name %>
+</p>
+
+<p>
+  <b>Last name:</b>
+  <%= @user.last_name %>
+</p>
+
+<p>
+  <b>Date created:</b>
+  <%= @user.date_created %>
+</p>
+
+<p>
+  <b>Is Admin:</b>
+  <%= (@user.is_admin) ? "Yes" : "No" %>
+</p>
+
+<p>
+  <b>Projects:</b>
+	<% @user.projects.each do |project| %>
+	  <ul>
+	    <li><%= project.name %>
+	    </li>
+	  </ul>
+	<% end %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user), :class=>"btn btn-secondary" %>
+
+<%= link_to 'Back', users_path, :class=>"btn btn-secondary" %>
+

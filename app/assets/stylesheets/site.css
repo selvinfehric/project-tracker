@@ -1,0 +1,12 @@
+
+/* footer */
+
+.footer { padding-top: 10px;}
+#footer-notice #f-n-icon { background: url("info.png") no-repeat center; float: right; width: 20px; height: 20px; cursor: pointer; }
+#footer-notice #f-n-text { float: right; width: 0px; overflow: hidden; height: 20px; padding-left: 2px; }
+
+.container{
+	width:960px;
+}
+
+.pt-logo { background: url("pt_logo.png") no-repeat; width: 141px; height: 59px; margin: 0px auto;}

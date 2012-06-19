@@ -1,0 +1,29 @@
+// Place all the styles related to the Epics controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.clear-both { clear: both; }
+#epics-modal { display: none; width: 600px; }
+#epics-modal textarea { width: 550px; height: 100px; }
+#epic-container { padding: 10px 0px; }
+#epic-container .epic-box { border: solid 1px #0088cc; margin: 5px 0px; padding: 5px; border-radius: 0px; background: #fbfbfb; }
+.min { height: 35px; overflow: hidden; }
+#epic-container .epic-box a { text-decoration: underline; } 
+#epic-container .epic-box .title { font-weight: bold; font-size: 14px; margin: 10px 1px; display: block; }
+#epic-container .epic-box i { font-style: normal; padding: 2px; color: #0088cc; cursor: pointer; text-decoration: underline; }
+#epic-container .epic-box ul { list-style: none; padding: 0px; margin: 10px 10px; display: block; }
+#epic-container .epic-box ul li { padding: 2px 8px; }
+#epic-container .epic-box ul.stories { margin: 10px 17px; border-left: solid 5px gray; border-top: solid 1px gray; background: whitesmoke;}
+#epic-container .epic-box ul.stories li { border-bottom: solid 1px gray; border-right: solid 1px gray; overflow: hidden; }
+#epic-container .epic-box ul .title {  font-weight: bold; font-size: 14px;  }
+span.epic-menu { margin: 0px 17px; }
+.add-story-menu i { float: right; margin-left: 5px;}
+#delete-epic { float: left; }
+
+#story-modal { width: 600px; }
+#story-modal textarea { width: 550px; height: 100px; }
+
+.e-title {}
+.e-desc { padding-left: 18px; margin-bottom: 10px; font-style: italic; }
+.editEpic { color: #0088cc }

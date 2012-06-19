@@ -1,0 +1,16 @@
+<% content_for :content do %>
+	<header id="overview" class="jumbotron subhead">
+	    <div class="subnav subnav-fixed">
+	      <ul class="nav nav-pills">
+	        <li class="active"><%= link_to 'Summary', @project %></li>
+	        <li class=""><a href="/epics">Epics</a></li>
+	        <li class=""><a href="/backlog">Backlog</a></li>
+	        <li class=""><a href="/sprints">Iterations</a></li>
+	        <li class=""><%= link_to 'Edit', edit_project_path(@project) %> </li>
+	      </ul>
+	    </div>
+	</header>
+  	<%= yield %>
+<% end %>
+
+<%= render :template => 'layouts/application' %>

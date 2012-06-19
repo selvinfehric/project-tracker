@@ -1,0 +1,53 @@
+<%= form_for(@story) do |f| %>
+  <% if @story.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@story.errors.count, "error") %> prohibited this story from being saved:</h2>
+
+      <ul>
+      <% @story.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :summary %><br />
+    <%= f.text_area :summary %>
+  </div>
+  <div class="field">
+    <%= f.label :details %><br />
+    <%= f.text_area :details %>
+  </div>
+  <div class="field">
+    <%= f.label :points %><br />
+    <%= f.number_field :points %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br />
+    <%= f.collection_select(:status_id, @statuses, :id, :name) %>
+  </div>
+  <div class="field">
+    <%= f.label :story_type %><br />
+    <%= f.collection_select(:story_type_id, @story_types, :id, :name, :include_blank => "Please select story type") %>
+  </div>
+  <div class="field">
+    <%= f.label :sprint %><br />
+    <%= f.collection_select(:sprint_id, @sprints, :id, :name, :include_blank => "Please select sprint") %>
+  </div>
+  <div class="field">
+    <%= f.label :user %><br />
+    <%= f.collection_select(:user_id, @users, :id, :username, :include_blank => "Please select user") %>
+  </div>
+  <div class="field">
+    <%= f.label :epic %><br />
+   	<%= f.collection_select(:epic_id, @epics, :id, :name, :include_blank => "Please select epic") %>
+  </div>
+  <div class="field hidden">
+    <%= f.label :project_id %><br />
+    <%= f.text_field :project_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

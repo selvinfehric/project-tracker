@@ -1,0 +1,84 @@
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+	<%
+		niz = []
+		ukupno = []
+		zavrseno = []
+		niz = (@sprint.start.strftime('%Y-%m-%d')..DateTime.now.strftime('%Y-%m-%d')).to_a
+		i=0;
+		for x in niz
+			niz[i]=x;
+			#%d/%m/%Y	%Y-%m-%d
+			#total = Story.find(:all, :conditions => [ "project_id=? AND date_created<=?", @project.id,x]);
+			ukupno[i]=Story.find(:all, :conditions => [ "sprint_id=? AND points IS NOT NULL AND date_created<=?", @sprint.id,(x+" 23:59:59").to_datetime]).map(&:points).inject(0, :+)
+			#completed=Story.find(:all, :conditions => [ "project_id=? AND date_completed<=?", @project.id,x]);
+			zavrseno[i]=Story.find(:all, :conditions => [ "sprint_id=? AND points IS NOT NULL AND date_completed<=?", @sprint.id,(x+" 23:59:59").to_datetime]).map(&:points).inject(0, :+)
+			# ili ovo:
+			# completed.inject{|sum,x| sum + x.points }
+			i=i+1;
+		end
+	%>
+<script>
+$(function () {
+    var chart;
+    $(document).ready(function() {   	
+    	/*
+    	var date = <%= @sprint.start.to_json.to_s.html_safe %>
+    	var dateT = <%= DateTime.now.to_json.to_s.html_safe %>
+    	var oDate = new Date(date)	
+    	var oDateT = new Date(dateT)
+    	*/
+    	var niz = <%= niz.to_json.html_safe %>	
+    	var ukupno = <%= ukupno.to_json.html_safe %>
+    	var zavrseno = <%= zavrseno.to_json.html_safe %>		
+		
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'chart',
+                type: 'area'
+            },
+            title: {
+                text: '<%= @sprint.name %>'
+            },
+            subtitle: {
+                text: 'Sprint Progress'
+            },
+            xAxis: {
+              	categories: niz,
+                tickmarkPlacement: 'on',
+                title: {
+                    enabled: false
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Number of points'
+                },
+                labels: {
+                    formatter: function() {
+                       return this.value;
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                   return ''+
+                        this.x +': '+ Highcharts.numberFormat(this.y, 0, ',');
+                }
+            },
+
+            series: [{
+                name: 'Total',
+                data: ukupno
+
+            }, {
+                name: 'Completed',
+                data: zavrseno
+            }]
+        });
+    });
+});
+</script>
+
+<div id="chart">
+</div>

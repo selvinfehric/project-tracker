@@ -1,0 +1,14 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+#user_list td{
+  width:100px;
+  /*text-align:center;*/
+}
+
+#user_list td.td_button{
+  width:50px;
+  /*text-align:center;*/
+}
