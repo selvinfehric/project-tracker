@@ -100,6 +100,7 @@ APP.Story.addEvents = function () {
     
     switch ($this.attr("class").split(" ")[0]) {
       case "add-new-story":
+      	$modal.find(".modal-header h3").text("Create story");
         $modal.attr("data-is-new", "true");   
         $modal.attr("data-epic-id", $this.parent().attr("data-epic-id"));     
         $modal.removeClass("hide"); 
@@ -107,6 +108,7 @@ APP.Story.addEvents = function () {
         APP.Story.populateForm(); 
       break;
       case "icon-pencil":
+      	$modal.find(".modal-header h3").text("Update story");
         $modal.attr("data-is-new", "false");
         $modal.attr("data-story-id", $this.parent().attr("data-story-id"));
         $modal.attr("data-epic-id", $this.closest(".stories").attr("id").split("_")[1]);
@@ -155,6 +157,10 @@ APP.Story.addEvents = function () {
 			error : function () { alert("Failed to move story to sprint."); }			
 		});				
 	});
+	
+	$("body").click(function () {
+		$(".sprints-menu").hide();
+	});
    
 }
 
@@ -169,12 +175,19 @@ APP.Story.showSprintsMenu = function($this) {
 	
 	$.get(APP.baseUrl + "sprints.json", function (data) {
 
-		var menuHtml = [];
+		var menuHtml = "", subMenu = "";
 		
-		menuHtml += '<ul class="sprints-menu" style="top:' + $this.position().top + 'px; left:' + $this.position().left + 'px;">';
+		menuHtml += '<ul class="sprints-menu dropdown-menu" style="top:' + $this.position().top + 'px; left:' + ($this.position().left + 15) + 'px;">';
 		for (var i = 0, len = data.length; i < len; i++) {
-			menuHtml += '<li id="sprint_' + data[i].id + '">' + data[i].name + '<li>'
-		}                
+			subMenu += '<li id="sprint_' + data[i].id + '"><a href ="javascript:void(0);">' + data[i].name + '</a></li>';
+			
+		}          
+		
+		if (subMenu == "") {
+			subMenu = "No sprint defined";
+		}
+		menuHtml += subMenu;
+		      
 		menuHtml += '</ul>';
 		
 		$this.parent().append(menuHtml);
@@ -182,7 +195,7 @@ APP.Story.showSprintsMenu = function($this) {
 							
 	});
 	
-}     
+}      
 
 APP.Story.serializeData = function () {
 
@@ -197,7 +210,7 @@ APP.Story.serializeData = function () {
   data.story.story_type_id = $form.find("select[name='story[type_id]']").val();
   data.story.user_id = $form.find("select[name='story[user_id]']").val();
   data.story.project_id = APP.Story.projectId;
-  data.story.project_id = APP.Story.sprintId;
+  data.story.sprint_id = APP.Story.sprintId;
   data.story.epic_id = $form.find("select[name='story[epic_id]']").val();
   
   for (item in data.story) {
@@ -210,7 +223,7 @@ APP.Story.serializeData = function () {
 }
 
 APP.Story.insertRecord = function (storyData) {
-  
+  console.log(storyData);
   $.ajax({
     type : "post",
     url : APP.baseUrl + "stories",
@@ -226,7 +239,7 @@ APP.Story.insertRecord = function (storyData) {
 APP.Story.createHtml = function (data) {
   
   var $ul = $("#stories-wrapper"),
-    li = "<li id='story_" + data.id + "'>" + data.summary + "<span class='add-story-menu' data-story-id='" + data.id + "'><i class='icon-remove'></i><i class='icon-pencil'></i></span></li>";
+    li = "<li id='story_" + data.id + "'>" + data.summary + "<span class='add-story-menu' data-story-id='" + data.id + "'><i class='icon-remove'></i><i class='icon-pencil'></i><i class='icon-share'></span></li>";
     
   $ul.append(li);         
 }
@@ -297,7 +310,7 @@ APP.Story.updateHtml = function (data) {
 
   var $story = $("#story_" + data.id);
     
-  $story.html(data.story.summary + '<span class="add-story-menu" data-story-id="' + data.id + '"><i class="icon-remove"></i><i class="icon-pencil"></i></span>'); 
+  $story.html(data.story.summary + '<span class="add-story-menu" data-story-id="' + data.id + '"><i class="icon-remove"></i><i class="icon-pencil"></i><i class="icon-share"></i></span>'); 
     
 }
 

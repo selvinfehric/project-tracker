@@ -21,7 +21,7 @@
 .scrum_board_header_done { background: #80b327; } 
 
 .scrum_board_list { list-style: none; margin: 0px; padding: 0px; }
-.scrum_board_list li  { display: block; padding: 5px; margin: 1px; position: relative; }
+.scrum_board_list li  { display: block; padding: 5px; margin: 1px; position: relative; cursor: move; }
 .scrum_board_list li .summary { font-weight: bold; width: 95%; margin-bottom: 10px; }
 .scrum_board_list li .points { position: absolute; right: 2px; top: 2px; padding: 5px 7px; color: black; font-weight: bold; font-size: 20px; }
 

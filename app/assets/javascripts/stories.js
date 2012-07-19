@@ -33,6 +33,7 @@ APP.Story.addEvents = function () {
     }   
 	$(".modal-backdrop").remove();
     $modal.addClass("hide");
+    APP.Story.removeNoStoriesText();
   });
   
   $(".add-story-menu i, .add-new-story").live("click", function () {
@@ -43,6 +44,7 @@ APP.Story.addEvents = function () {
     
     switch ($this.attr("class").split(" ")[0]) {
       case "add-new-story":
+      	$modal.find(".modal-header h3").text("Create story");
         $modal.attr("data-is-new", "true");   
         $modal.attr("data-epic-id", $this.parent().attr("data-epic-id"));     
         $modal.removeClass("hide"); 
@@ -50,6 +52,7 @@ APP.Story.addEvents = function () {
         APP.Story.populateForm(); 
       break;
       case "icon-pencil":
+      	$modal.find(".modal-header h3").text("Update story");
         $modal.attr("data-is-new", "false");
         $modal.attr("data-story-id", $this.parent().attr("data-story-id"));
         $modal.attr("data-epic-id", $this.closest(".stories").attr("id").split("_")[1]);
@@ -64,6 +67,7 @@ APP.Story.addEvents = function () {
         APP.Story.remove($this);
       break;      
     }
+
   });   
   
    	$(".close-modal, button.close").click(function () {
@@ -93,13 +97,23 @@ APP.Story.addEvents = function () {
 			data : data,
 			dataType : "json",
 			success : function () {
-				alert("success");				
+				alert("Story successfull moved to another iteration.");
+				$(".sprints-menu").hide();				
 			},
 			error : function () { alert("Failed to move story to sprint."); }			
 		});				
 	});
+	
+	$("body").click(function () {
+		$(".sprints-menu").hide();
+	});
    
 }
+
+APP.Story.removeNoStoriesText  = function () {
+	$(".no-stories-text").hide();	
+};
+
 
 APP.Story.removeSprintMenus = function () {
 	
@@ -112,12 +126,19 @@ APP.Story.showSprintsMenu = function($this) {
 	
 	$.get(APP.baseUrl + "sprints.json", function (data) {
 
-		var menuHtml = [];
+		var menuHtml = "", subMenu = "";
 		
-		menuHtml += '<ul class="sprints-menu" style="top:' + $this.position().top + 'px; left:' + $this.position().left + 'px;">';
+		menuHtml += '<ul class="sprints-menu dropdown-menu" style="top:' + $this.position().top + 'px; left:' + ($this.position().left + 15) + 'px;">';
 		for (var i = 0, len = data.length; i < len; i++) {
-			menuHtml += '<li id="sprint_' + data[i].id + '">' + data[i].name + '<li>'
-		}                
+			subMenu += '<li id="sprint_' + data[i].id + '"><a href ="javascript:void(0);">' + data[i].name + '</a></li>';
+			
+		}          
+		
+		if (subMenu == "") {
+			subMenu = "No sprint defined";
+		}
+		menuHtml += subMenu;
+		      
 		menuHtml += '</ul>';
 		
 		$this.parent().append(menuHtml);
@@ -169,7 +190,7 @@ APP.Story.insertRecord = function (storyData) {
 APP.Story.createHtml = function (data) {
   
   var $ul = $("#stories-wrapper"),
-    li = "<li id='story_" + data.id + "'>" + data.summary + "<span class='add-story-menu' data-story-id='" + data.id + "'><i class='icon-remove'></i><i class='icon-pencil'></i></span></li>";
+    li = "<li id='story_" + data.id + "'>" + data.summary + "<span class='add-story-menu' data-story-id='" + data.id + "'><i class='icon-remove'></i><i class='icon-pencil'></i><i class='icon-share'></i></span></li>";
     
   $ul.append(li);         
 }
@@ -240,7 +261,7 @@ APP.Story.updateHtml = function (data) {
 
   var $story = $("#story_" + data.id);
     
-  $story.html(data.story.summary + '<span class="add-story-menu" data-story-id="' + data.id + '"><i class="icon-remove"></i><i class="icon-pencil"></i></span>'); 
+  $story.html(data.story.summary + '<span class="add-story-menu" data-story-id="' + data.id + '"><i class="icon-remove"></i><i class="icon-pencil"></i><i class="icon-share"></i></span>'); 
     
 }
 

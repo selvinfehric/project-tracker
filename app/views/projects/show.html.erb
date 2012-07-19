@@ -4,15 +4,17 @@
 		niz = []
 		ukupno = []
 		zavrseno = []
-		niz = (@project.date_created.strftime('%Y-%m-%d')..DateTime.now.strftime('%Y-%m-%d')).to_a
+		# niz = (@project.date_created.strftime('%d-%m-%Y')..DateTime.now.strftime('%d-%m-%Y')).to_a
+		# niz = (@project.date_created.strftime('%Y-%m-%dd')..DateTime.now.strftime('%Y-%m-%dd')).to_a
+		niz = (@project.date_created.to_date..DateTime.now.to_date).to_a
 		i=0;
 		for x in niz
-			niz[i]=x;
+			niz[i]=x.strftime('%d-%m-%Y');
 			#%d/%m/%Y	%Y-%m-%d
 			#total = Story.find(:all, :conditions => [ "project_id=? AND date_created<=?", @project.id,x]);
-			ukupno[i]=Story.find(:all, :conditions => [ "project_id=? AND points IS NOT NULL AND date_created<=?", @project.id,(x+" 23:59:59").to_datetime]).map(&:points).inject(0, :+)
+			ukupno[i]= Story.find(:all, :conditions => [ "project_id=? AND points IS NOT NULL AND date_created<=?", @project.id,(x.strftime('%Y-%m-%d')+" 23:59:59").to_datetime]).map(&:points).inject(0, :+)
 			#completed=Story.find(:all, :conditions => [ "project_id=? AND date_completed<=?", @project.id,x]);
-			zavrseno[i]=Story.find(:all, :conditions => [ "project_id=? AND points IS NOT NULL AND date_completed<=?", @project.id,(x+" 23:59:59").to_datetime]).map(&:points).inject(0, :+)
+			zavrseno[i]= Story.find(:all, :conditions => [ "project_id=? AND points IS NOT NULL AND date_completed<=?", @project.id,(x.strftime('%Y-%m-%d')+" 23:59:59").to_datetime]).map(&:points).inject(0, :+)
 			# ili ovo:
 			# completed.inject{|sum,x| sum + x.points }
 			i=i+1;

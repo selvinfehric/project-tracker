@@ -18,11 +18,12 @@
 #backlog ul { list-style: none; padding: 0px; margin: 10px 10px; display: block; }
 #backlog ul li { padding: 2px 8px; }
 #backlog ul.stories { margin: 10px 17px; border-left: solid 5px gray; border-top: solid 0px gray; background: whitesmoke;}
-#backlog ul.stories li { border-bottom: solid 1px gray; border-right: solid 1px gray; overflow: hidden; }
+#backlog ul.stories li { border-bottom: solid 1px gray; border-top: solid 1px gray; border-right: solid 1px gray; overflow: hidden; margin-bottom: 1px; }
 #backlog ul .title {  font-weight: bold; font-size: 14px;  }
-
-.sprints-menu { list-style: none; margin: 0px; padding: 0px; border: none; position: absolute; }
-.sprints-menu li { border: none; cursor: pointer; width: 100px; }
+#backlog ul.stories li .add-story-menu .sprints-menu { position: absolute; }
+#backlog ul.stories li .add-story-menu .sprints-menu li { border: none; cursor: pointer; margin: 0px; padding: 0px; }
 
 #story-modal { width: 600px; }
 #story-modal textarea { width: 550px; height: 100px; }
+
+.add-story-menu i { cursor: pointer; }

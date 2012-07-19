@@ -58,8 +58,8 @@
 <a class="add-new-story btn btn-success" href="#">Add new</a>
 <br/>
 <div id="backlog">
-<%if @stories.count > 0 %>
-	<ul class="stories" id="stories-wrapper">
+<ul class="stories" id="stories-wrapper">
+	<%if @stories.count > 0 %>
 		<% @stories.each do |story| %>
 		  <li id="story_<%= story.id %>">
 		  	<%= story.summary %>
@@ -67,11 +67,14 @@
 		  		<i class="icon-remove"></i><i class="icon-pencil"></i><i class="icon-share"></i>
 		  	</span>
 		  </li>
-		<% end %>
-	</ul>
-<% else %>
+		<% end %>			
+	<% end %>
+</ul>
+
+<% if (@stories.count == 0) %>
 	<div class="no-stories-text">No stories defined for this project yet.</div>
 <% end %>
+
 </div>
 
 
