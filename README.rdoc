@@ -1,1 +1,2 @@
-ScrumDo.org port to Ruby
+Project tracker implemented in Ruby, it is "ported" from ScrumDo.
+Design and functionalities are taken from ScrumDo, but whole project is implemented from zero using Rails MVC Framework.
